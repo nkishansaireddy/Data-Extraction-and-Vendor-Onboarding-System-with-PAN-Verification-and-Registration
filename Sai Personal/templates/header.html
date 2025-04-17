@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNRE - Ministry of New and Renewable Energy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Top Bar Styling */
+        .header-top {
+            background-color: #004080;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+        .lang-switch {
+            color: yellow;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        /* Header Styling */
+        .gov-header {
+            background-color: #002147;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-family: Arial, sans-serif;
+        }
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .gov-emblem {
+            width: 80px;
+            height: auto;
+        }
+        .header-title {
+            text-align: center;
+            flex-grow: 1;
+        }
+        .header-title h2 {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        .header-title h1 {
+            margin: 5px 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .header-title p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        .azadi-logo {
+            width: 120px;
+            height: auto;
+        }
+
+        /* Navigation Bar Styling */
+        .navbar {
+            background-color: #003366;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        .navbar ul li {
+            margin-right: 20px;
+        }
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .navbar ul li a:hover {
+            text-decoration: underline;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+        .search-bar {
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="header-top">
+        <p>भारत सरकार | GOVERNMENT OF INDIA</p>
+        <a href="#" class="lang-switch">ENGLISH</a>
+    </div>
+
+    <!-- Header -->
+    <header class="gov-header">
+        <div class="header-main">
+            <img src="{{ url_for('static', filename='images/emblem.png') }}" alt="Government Emblem" class="gov-emblem">
+            <div class="header-title">
+                <h2>नवीन एवं नवीकरणीय ऊर्जा मंत्रालय</h2>
+                <h1>MINISTRY OF NEW AND RENEWABLE ENERGY</h1>
+                <p>सत्यमेव जयते</p>
+            </div>
+            <img src="{{ url_for('static', filename='images/azadi.png') }}" alt="Azadi Ka Amrit Mahotsav" class="azadi-logo">
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Help</a></li>
+        </ul>
+        <div class="nav-right">
+            <input type="text" placeholder="Search..." class="search-bar">
+        </div>
+    </nav>
+
+</body>
+</html>

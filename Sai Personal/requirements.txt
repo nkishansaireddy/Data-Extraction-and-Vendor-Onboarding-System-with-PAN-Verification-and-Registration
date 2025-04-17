@@ -1,0 +1,13 @@
+flask
+requests
+numpy
+pandas
+matplotlib
+scikit-learn
+opencv-python
+keras
+beautifulsoup4
+lxml
+selenium
+gunicorn
+python-dotenv

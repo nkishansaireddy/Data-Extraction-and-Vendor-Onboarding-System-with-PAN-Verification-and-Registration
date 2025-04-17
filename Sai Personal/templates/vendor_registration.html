@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Registration</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .toast-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1100;
+            width: 400px;
+        }
+        .toast {
+            font-size: 1.25rem;
+            padding: 1rem;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        .btn-primary, .btn-secondary, .btn-warning, .btn-info {
+            border-radius: 8px;
+        }
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+        .form-check-label a {
+            text-decoration: none;
+        }
+        .form-check-label a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function previewForm() {
+            let formData = document.forms["vendorForm"];
+            let previewContent = `
+                <p><strong>Name of Firm:</strong> ${formData.firm_name.value}</p>
+                <p><strong>Father's Name:</strong> ${formData.father_name.value}</p>
+                <p><strong>Date of Birth:</strong> ${formData.dob.value}</p>
+                <p><strong>Gender:</strong> ${formData.gender.value}</p>
+                <p><strong>Nationality:</strong> ${formData.nationality.value}</p>
+                <p><strong>Mobile:</strong> ${formData.mobile.value}</p>
+                <p><strong>Email:</strong> ${formData.email.value}</p>
+                <p><strong>Legal Status:</strong> ${formData.legal_status.value}</p>
+                <p><strong>GSTIN:</strong> ${formData.gstin.value}</p>
+                <p><strong>PAN Number:</strong> ${formData.pan_number.value}</p>
+                <p><strong>PF Number:</strong> ${formData.pf_number.value}</p>
+            `;
+            document.getElementById("previewBody").innerHTML = previewContent;
+            let previewModal = new bootstrap.Modal(document.getElementById("previewModal"));
+            previewModal.show();
+        }
+
+        function validateForm(event) {
+            if (!document.getElementById("terms").checked) {
+                alert("You must accept the Terms and Conditions to proceed.");
+                event.preventDefault();
+            }
+        }
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("imgPreview").src = e.target.result;
+                    document.getElementById("imgPreview").style.display = "block";
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function printPreview() {
+            let printContents = document.getElementById("previewBody").innerHTML;
+            let originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            window.location.reload();
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Data Extraction Module</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-danger text-white" href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Vendor Registration Form</h2>
+        <form name="vendorForm" method="POST" enctype="multipart/form-data" class="border p-4 shadow-lg bg-light rounded" onsubmit="validateForm(event)">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Name of Firm</label>
+                    <input type="text" name="firm_name" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Father's Name</label>
+                    <input type="text" name="father_name" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Date of Birth</label>
+                    <input type="date" name="dob" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Gender</label>
+                    <select name="gender" class="form-select" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Nationality</label>
+                    <input type="text" name="nationality" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Mobile</label>
+                    <input type="tel" name="mobile" class="form-control" pattern="[0-9]{10}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Legal Status</label>
+                    <select name="legal_status" class="form-select" required>
+                        <option value="">Select Legal Status</option>
+                        <option value="Ltd">Ltd</option>
+                        <option value="Pvt">Pvt</option>
+                        <option value="Proprietary">Proprietary</option>
+                        <option value="Partnership">Partnership</option>
+                        <option value="LLP">LLP</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">GSTIN</label>
+                    <input type="text" name="gstin" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">PAN Number</label>
+                    <input type="text" name="pan_number" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Provident Fund Number (if applicable)</label>
+                    <input type="text" name="pf_number" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Upload PAN Image</label>
+                    <input type="file" name="pan_image" class="form-control" accept="image/*" onchange="previewImage(this)" required>
+                    <img id="imgPreview" src="#" alt="Image Preview" style="display:none; max-width: 100px; margin-top: 10px;">
+                </div>
+            </div>
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="terms" required>
+                <label class="form-check-label">
+                    I accept the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>
+                </label>
+            </div>
+            <div class="text-center mt-4">
+                <button type="button" class="btn btn-secondary" onclick="previewForm()">Preview</button>
+                <button type="reset" class="btn btn-warning">Reset</button>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="previewModalLabel">Form Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="previewBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" onclick="printPreview()">Print Preview</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close Preview</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at quam vitae lorem sollicitudin ultrices. Proin ultricies felis vel odio fermentum, vitae congue dolor bibendum.</p>
+                    <p>By registering, you agree to abide by all the terms stated above.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">I Agree</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container">
+        <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {{ messages[0] }}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                window.addEventListener('load', function() {
+                    var toastEl = document.getElementById('successToast');
+                    var toast = new bootstrap.Toast(toastEl, { delay: 5000 });
+                    toast.show();
+                });
+            {% endif %}
+        {% endwith %}
+    </script>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p>© 2025 Ministry of New and Renewable Energy. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

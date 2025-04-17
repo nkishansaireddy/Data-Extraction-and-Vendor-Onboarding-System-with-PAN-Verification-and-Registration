@@ -1,0 +1,29 @@
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'  # Use SQLite file
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+class Vendor(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    firm_name = db.Column(db.String(100), nullable=False)
+    father_name = db.Column(db.String(100), nullable=True)  # Added field
+    dob = db.Column(db.String(50), nullable=False)
+    gender = db.Column(db.String(10), nullable=False)
+    nationality = db.Column(db.String(50), nullable=False)
+    mobile = db.Column(db.String(15), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    legal_status = db.Column(db.String(50), nullable=False)
+    gstin = db.Column(db.String(20), nullable=True)
+    pan_number = db.Column(db.String(20), nullable=False)
+    provident_fund = db.Column(db.String(50), nullable=True)
+    pan_image = db.Column(db.String(200), nullable=True)
+
+# Create the database
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+    print("Database and tables created successfully!")

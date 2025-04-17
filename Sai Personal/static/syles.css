@@ -1,0 +1,80 @@
+/* General Page Styles */
+body {
+    background-color: #1e1e1e;
+    text-align: center;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* Footer Section */
+.footer {
+    margin-top: 20px;
+    font-size: 12px;
+    padding: 20px;
+    background-color: #111;
+    color: #ccc;
+}
+
+/* Social Media Icons */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icons img {
+    width: 40px; /* Fixed size */
+    height: 40px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.social-icons img:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* Fixing LinkedIn Icon Size */
+.main-content img {
+    width: 50px !important;  /* Adjusted LinkedIn icon */
+    height: 50px !important;
+    display: block;
+    margin: 10px auto;
+}
+
+/* Copyright Footer Text */
+.footer p {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #bbb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer {
+        font-size: 12px;
+        padding: 10px;
+    }
+    
+    .social-icons img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .main-content img {
+        width: 40px !important;  /* Adjusted for smaller screens */
+        height: 40px !important;
+    }
+}
+.gov-emblem {
+    width: 80px;
+    height: auto;
+    max-height: 80px;
+}
+
+.azadi-logo {
+    width: 120px;
+    height: auto;
+    max-height: 80px;
+}

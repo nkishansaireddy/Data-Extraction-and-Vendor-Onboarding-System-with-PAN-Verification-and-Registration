@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify PAN</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Verify PAN</h1>
+        <p class="text-center">PAN details will be verified using OCR.</p>
+
+        <div class="card p-4 shadow-sm">
+            <h4 class="text-center text-primary">Vendor PAN Verification</h4>
+            
+            <!-- Display Extracted PAN Info -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">OCR Extracted PAN:</label>
+                <input type="text" class="form-control" value="{{ extracted_pan }}" readonly>
+            </div>
+
+            <!-- Display Manually Entered PAN -->
+            <form action="{{ url_for('update_pan_status', vendor_id=vendor_id) }}" method="post">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Manually Entered PAN (If OCR is incorrect):</label>
+                    <input type="text" name="manual_pan" class="form-control" placeholder="Enter PAN manually">
+                </div>
+
+                <!-- Verification Status -->
+                {% if verification_status %}
+                <div class="alert {% if verification_status == 'Matched' %}alert-success{% else %}alert-danger{% endif %}">
+                    {{ verification_status }}
+                </div>
+                {% endif %}
+
+                <button type="submit" class="btn btn-success w-100">Verify & Update</button>
+            </form>
+
+            <hr>
+
+            <div class="text-center">
+                <a href="{{ url_for('data_management') }}" class="btn btn-primary">Back to Data Management</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

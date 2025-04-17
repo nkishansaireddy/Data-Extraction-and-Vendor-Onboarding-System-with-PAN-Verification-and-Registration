@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & FAQ - Data Extraction Module</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h1 class="text-center fw-bold">Help & FAQ</h1>
+    <p class="text-center text-muted">Find answers to common questions or contact support.</p>
+
+    <!-- FAQ Section -->
+    <div class="accordion mt-4" id="faqAccordion">
+        <!-- FAQ Item 1 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                    How do I register a vendor?
+                </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    Click on "Register Vendor" on the homepage and fill out the required details.
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    What document formats are supported for PAN verification?
+                </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    The system supports JPG, PNG, and PDF formats for PAN uploads.
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                    What happens if my PAN verification fails?
+                </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    If your PAN details do not match, please ensure the uploaded image is clear and the details entered are correct.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Support Form -->
+    <div class="mt-5">
+        <h3 class="fw-bold">Contact Support</h3>
+        <p>If you need further assistance, submit your issue below:</p>
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Your Name</label>
+                <input type="text" class="form-control" placeholder="Enter your name" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Describe Your Issue</label>
+                <textarea class="form-control" rows="3" placeholder="Describe your issue" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- Back to Home Button -->
+    <div class="text-center mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
+    </div>
+</div>
+
+</body>
+</html>

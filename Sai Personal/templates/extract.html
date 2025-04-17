@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Extraction from Image</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        .image-preview {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+        .loading-indicator {
+            display: none;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .loading-indicator.show {
+            display: block;
+        }
+        .copy-button {
+            margin-top: 10px;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        .result-container {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-primary text-white py-3">
+        <div class="container">
+            <h1 class="text-center mb-0">
+                <i class="bi bi-image"></i> Data Extraction Module
+            </h1>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4 text-primary">
+            <i class="bi bi-image"></i> Seamless Extraction of Data Through Machine Learning Algorithms
+        </h2>
+
+        <form id="uploadForm" action="{{ url_for('extract_data') }}" method="POST" enctype="multipart/form-data" class="mb-4">
+            <div class="mb-3">
+                <label for="image" class="form-label">Upload Image File</label>
+                <input type="file" class="form-control" id="image" name="image" required accept="image/*">
+            </div>
+            <div id="imagePreviewContainer">
+                <img id="imagePreview" class="image-preview" style="display: none;">
+            </div>
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-upload"></i> Upload & Extract
+            </button>
+            <div class="loading-indicator" id="loadingIndicator">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Extracting data...</p>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+        </form>
+
+        {% if extracted_text %}
+        <div class="card shadow result-container">
+            <div class="card-header bg-primary text-white">
+                <strong><i class="bi bi-file-text"></i> Extracted Data</strong>
+            </div>
+            <div class="card-body">
+                <pre id="extractedText">{{ extracted_text }}</pre>
+                <button class="btn btn-secondary copy-button" id="copyButton">
+                    <i class="bi bi-clipboard"></i> Copy to Clipboard
+                </button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer class="bg-dark text-white py-3 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">© 2025 Ministry of New and Renewable Energy | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const imageInput = document.getElementById('image');
+        const imagePreview = document.getElementById('imagePreview');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        const uploadForm = document.getElementById('uploadForm');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const errorMessage = document.getElementById('errorMessage');
+        const extractedTextElement = document.getElementById('extractedText');
+        const copyButton = document.getElementById('copyButton');
+
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    errorMessage.textContent = ""; // Clear any previous error messages.
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = '';
+                imagePreview.style.display = 'none';
+            }
+        });
+
+        uploadForm.addEventListener('submit', function(event) {
+            if (!imageInput.files[0]) {
+                errorMessage.textContent = "Please select an image.";
+                event.preventDefault(); // Prevent form submission
+                return;
+            }
+            loadingIndicator.classList.add('show');
+        });
+
+        {% if extracted_text %}
+            window.onload = function() {
+                loadingIndicator.classList.remove('show');
+            }
+
+            copyButton.addEventListener('click', function() {
+                navigator.clipboard.writeText(extractedTextElement.textContent)
+                    .then(() => {
+                        alert("Text copied to clipboard!");
+                    })
+                    .catch(err => {
+                        console.error('Could not copy text: ', err);
+                        alert("Failed to copy text.");
+                    });
+            });
+        {% endif %}
+
+    </script>
+</body>
+</html>
